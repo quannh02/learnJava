@@ -10,7 +10,9 @@ package com.mycompany.helloworldapp;
  * @author quan
  */
 import java.text.DecimalFormat;
+import java.util.AbstractMap;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -45,27 +47,34 @@ class Stock {
 
 public class HelloWorldApp {
     public static void main(String[] args) {
-        System.out.println("Abstract class examples");
+        System.out.println("AbstractMap để lưu dữ liệu dạng Key-Value");
+        AbstractMap<String, Object> mapEmployee = new HashMap<String, Object>();
+        if (mapEmployee.isEmpty()) {
+            System.out.println("HashMap is empty");
+        }
+        mapEmployee.put("name", "Hoang");
+        mapEmployee.put("age", 30);
+        System.out.println("Detail employee: ");
+        System.out.println("Name: " + mapEmployee.get("name") + " Age: " + mapEmployee.get("age"));
+        System.out.println("Size: "+mapEmployee.size());
+        AbstractMap<Double, Double> mapPoints = new HashMap<Double, Double>();
+        mapPoints.put(1.0, 5.0);
+        mapPoints.put(2.0, 1.0);
+        mapPoints.put(4.0, 50.0);
+        mapPoints.put(5.0, 51.0);
+        mapPoints.forEach((key, value) -> {
+            System.out.println("Key ="+key+".Value = "+value);
+        });
+        mapPoints.remove(4.0);
+        mapPoints.forEach((key, value)->{
+            System.out.println("Key ="+key+".Value = "+value);
+        });
 
-        Shape shape = new Shape("shape A") {
-            @Override
-            public double area() {
-                return 0;
-            }
-
-            @Override
-            public void draw() {
-
-            }
-        };
-
-        Rectangle rectangle = new Rectangle("rect A", 123.00, 123.00);
-        System.out.println("Rectangle's area = " + rectangle.area());
-        System.out.println("Circle calculation");
-        Circle circle = new Circle("Circle A", 10.00);
-        System.out.println("Circle's area = " + circle.area());
-        rectangle.moveTo(1, 2);
-        circle.moveTo(3, 4);
+        System.out.println("Hashcode: "+mapPoints.hashCode());
+        AbstractMap<String, Object> mapEmployee2 = new HashMap<String, Object>();
+        mapEmployee2.put("name", "Hoang");
+        mapEmployee2.put("age", 30);
+        System.out.println(mapEmployee.equals(mapEmployee2));
     }
 }
 

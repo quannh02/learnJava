@@ -29,7 +29,22 @@ public class HelloWorldApp {
 
         System.out.println("Clone Result to another List");
         List<Person> filteredList = (List<Person>)persons.stream().filter(predicate).collect(Collectors.toList());
+        System.out.println(persons.stream());
         filteredList.forEach(person -> person.showDetails());
+
+        System.out.println("Map from Person's list => name's list");
+        List<String> names = filteredList.stream().map(person -> person.getName()).collect(Collectors.toList());
+        names.forEach(name -> System.out.println(name));
+
+        System.out.println("Map from Person's list => age's list");
+        List<Integer> ages = filteredList.stream().mapToInt(person -> person.getAge())
+                .boxed()
+                .collect(Collectors.toList());
+        ages.forEach(age -> System.out.println(age));
+        System.out.println("Average of all ages:");
+        System.out.println(filteredList.stream().mapToInt(person -> person.getAge()).average());
+        System.out.println("Sum of all ages : ");
+        System.out.println(filteredList.stream().mapToInt(person->person.getAge()).sum());
     }
 }
 

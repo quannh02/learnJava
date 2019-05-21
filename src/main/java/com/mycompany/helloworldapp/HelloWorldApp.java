@@ -9,6 +9,7 @@ package com.mycompany.helloworldapp;
  *
  * @author quan
  */
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
@@ -16,35 +17,38 @@ import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+class Stock {
+    private String symbol;
+    private String companyName;
+    private double previosClosingPrice;
+    private double currentPrice;
+
+    Stock(String symbol, String companyName) {
+        this.symbol = symbol;
+        this.companyName = companyName;
+    }
+
+    double getChangePercent() {
+        double percent = ((currentPrice - previosClosingPrice)/previosClosingPrice) * 100;
+        DecimalFormat format = new DecimalFormat("#.##");
+        return Double.valueOf(format.format(percent));
+    }
+
+    void setPreviosClosingPrice(double newValue) {
+        previosClosingPrice = newValue;
+    }
+
+    void setCurrentPrice(double newValue) {
+        currentPrice = newValue;
+    }
+}
+
 public class HelloWorldApp {
     public static void main(String[] args) {
-        List<Person> persons = Person.generateListOfPersons();
-        SearchManager searchManager = SearchManager.getInstance();
-//        Predicate predicate = searchManager.getPredicate("predicateAgeOver30");
-        Predicate predicate = searchManager.getPredicate("predicateAgeBetween30And40");
-        System.out.println("List after filtered");
-        persons.stream().filter(predicate).forEach(person -> {
-            ((Person) person).showDetails();
-        });
-
-        System.out.println("Clone Result to another List");
-        List<Person> filteredList = (List<Person>)persons.stream().filter(predicate).collect(Collectors.toList());
-        System.out.println(persons.stream());
-        filteredList.forEach(person -> person.showDetails());
-
-        System.out.println("Map from Person's list => name's list");
-        List<String> names = filteredList.stream().map(person -> person.getName()).collect(Collectors.toList());
-        names.forEach(name -> System.out.println(name));
-
-        System.out.println("Map from Person's list => age's list");
-        List<Integer> ages = filteredList.stream().mapToInt(person -> person.getAge())
-                .boxed()
-                .collect(Collectors.toList());
-        ages.forEach(age -> System.out.println(age));
-        System.out.println("Average of all ages:");
-        System.out.println(filteredList.stream().mapToInt(person -> person.getAge()).average());
-        System.out.println("Sum of all ages : ");
-        System.out.println(filteredList.stream().mapToInt(person->person.getAge()).sum());
+        Stock stock = new Stock("ORCL", "Oracle Corporation");
+        stock.setPreviosClosingPrice(122.00);
+        stock.setCurrentPrice(144.00);
+        System.out.println(stock.getChangePercent());
     }
 }
 

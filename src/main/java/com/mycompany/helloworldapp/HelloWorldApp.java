@@ -45,10 +45,27 @@ class Stock {
 
 public class HelloWorldApp {
     public static void main(String[] args) {
-        Stock stock = new Stock("ORCL", "Oracle Corporation");
-        stock.setPreviosClosingPrice(122.00);
-        stock.setCurrentPrice(144.00);
-        System.out.println(stock.getChangePercent());
+        System.out.println("Abstract class examples");
+
+        Shape shape = new Shape("shape A") {
+            @Override
+            public double area() {
+                return 0;
+            }
+
+            @Override
+            public void draw() {
+
+            }
+        };
+
+        Rectangle rectangle = new Rectangle("rect A", 123.00, 123.00);
+        System.out.println("Rectangle's area = " + rectangle.area());
+        System.out.println("Circle calculation");
+        Circle circle = new Circle("Circle A", 10.00);
+        System.out.println("Circle's area = " + circle.area());
+        rectangle.moveTo(1, 2);
+        circle.moveTo(3, 4);
     }
 }
 

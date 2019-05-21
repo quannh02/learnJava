@@ -13,21 +13,23 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class HelloWorldApp {
     public static void main(String[] args) {
-        Function<Person, String> showNameAndEmail = person -> {
-            return "Name: "+person.getName()+" Email: "+person.getEmail();
-        };
-        Function<Person, String> showNameAndAge = person -> {
-            return "Name: "+person.getName()+" Age: "+person.getAge();
-        };
-        Person personA = new Person("Nguyen Duc Hoang",
-                "hoang@gmail.com",40,
-                "Mai Huong, Hanoi, Vietnam");
-        personA.showDetails(showNameAndEmail);
-        personA.showDetails(showNameAndAge);
-        personA.showDetails(showNameAndAge);
+        List<Person> persons = Person.generateListOfPersons();
+        SearchManager searchManager = SearchManager.getInstance();
+//        Predicate predicate = searchManager.getPredicate("predicateAgeOver30");
+        Predicate predicate = searchManager.getPredicate("predicateAgeBetween30And40");
+        System.out.println("List after filtered");
+        persons.stream().filter(predicate).forEach(person -> {
+            ((Person) person).showDetails();
+        });
+
+        System.out.println("Clone Result to another List");
+        List<Person> filteredList = (List<Person>)persons.stream().filter(predicate).collect(Collectors.toList());
+        filteredList.forEach(person -> person.showDetails());
     }
 }
 
